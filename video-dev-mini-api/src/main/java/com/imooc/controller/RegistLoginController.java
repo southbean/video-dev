@@ -20,7 +20,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @Api(value="用户注册登录的接口", tags= {"注册和登录的controller"})
-public class RegistLoginController {
+public class RegistLoginController extends BasicController{
 	
 	@Autowired
 	private UserService userService;
@@ -49,20 +49,23 @@ public class RegistLoginController {
 			return IMoocJSONResult.errorMsg("用户名已经存在，请换一个再试");
 		}
 		
+		user.setPassword("");
 		
-//				String uniqueToken = UUID.randomUUID().toString();
-//				redis.set(USER_REDIS_SESSION + ":" + user.getId(), uniqueToken, 1000 * 60 * 30);
+//		String uniqueToken = UUID.randomUUID().toString();
+//		redis.set(USER_REDIS_SESSION + ":" + user.getId(), uniqueToken, 1000 * 60 * 30);
 //				
-//				UsersVO userVO = new UsersVO();
-//				BeanUtils.copyProperties(user, userVO);
-//				userVO.setUserToken(uniqueToken);
+//		UsersVO userVO = new UsersVO();
+//		BeanUtils.copyProperties(user, userVO);
+//		userVO.setUserToken(uniqueToken);
 		
-		return IMoocJSONResult.ok(user);
+		UsersVO userVo = setUserRedisSessionToken(user);
+		
+		return IMoocJSONResult.ok(userVo);
 	}
 	
 	public UsersVO setUserRedisSessionToken(Users userModel) {
 		String uniqueToken = UUID.randomUUID().toString();
-//		redis.set(USER_REDIS_SESSION + ":" + userModel.getId(), uniqueToken, 1000 * 60 * 30);
+		redis.set(USER_REDIS_SESSION + ":" + userModel.getId(), uniqueToken, 1000 * 60 * 30);
 		
 		UsersVO userVO = new UsersVO();
 		BeanUtils.copyProperties(userModel, userVO);
