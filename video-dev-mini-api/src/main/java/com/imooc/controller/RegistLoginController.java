@@ -16,6 +16,7 @@ import com.imooc.utils.IMoocJSONResult;
 import com.imooc.utils.MD5Utils;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
@@ -98,5 +99,14 @@ public class RegistLoginController extends BasicController{
 		} else {
 			return IMoocJSONResult.errorMsg("用户名或密码不正确, 请重试...");
 		}
+	}
+	
+	@ApiOperation(value="用户注销", notes="用户注销的接口")
+	@ApiImplicitParam(name="userId", value="用户id", required=true, 
+		dataType="String", paramType="query")
+	@PostMapping("/logout")
+	public IMoocJSONResult logout(String userId) throws Exception {
+		redis.del(USER_REDIS_SESSION + ":" + userId);
+		return IMoocJSONResult.ok();
 	}
 }
