@@ -55,7 +55,7 @@ public class Swagger2 {
 				// 设置页面标题
 				.title("使用swagger2构建短视频后端api接口文档")
 				// 设置联系人
-				.contact(new Contact("southbean", "http://www.southbean.com", "quanyt@126.com"))
+				.contact(new Contact("southbean", "http://www.southbean.com", "quanyt1@126.com"))
 				// 描述
 				.description("欢迎访问短视频接口文档，这里是描述信息")
 				// 定义版本号
