@@ -127,41 +127,41 @@ public class VideoController extends BasicController {
 		
 		// 判断bgmId是否为空，如果不为空，
 		// 那就查询bgm的信息，并且合并视频，生产新的视频
-//		if (StringUtils.isNotBlank(bgmId)) {
-//			Bgm bgm = bgmService.queryBgmById(bgmId);
-//			String mp3InputPath = FILE_SPACE + bgm.getPath();
-//			
-//			MergeVideoMp3 tool = new MergeVideoMp3(FFMPEG_EXE);
-//			String videoInputPath = finalVideoPath;
-//			
-//			String videoOutputName = UUID.randomUUID().toString() + ".mp4";
-//			uploadPathDB = "/" + userId + "/video" + "/" + videoOutputName;
-//			finalVideoPath = FILE_SPACE + uploadPathDB;
-//			tool.convertor(videoInputPath, mp3InputPath, videoSeconds, finalVideoPath);
-//		}
-//		System.out.println("uploadPathDB=" + uploadPathDB);
-//		System.out.println("finalVideoPath=" + finalVideoPath);
-//		
-//		// 对视频进行截图
-//		FetchVideoCover videoInfo = new FetchVideoCover(FFMPEG_EXE);
-//		videoInfo.getCover(finalVideoPath, FILE_SPACE + coverPathDB);
-//		
-//		// 保存视频信息到数据库
-//		Videos video = new Videos();
-//		video.setAudioId(bgmId);
-//		video.setUserId(userId);
-//		video.setVideoSeconds((float)videoSeconds);
-//		video.setVideoHeight(videoHeight);
-//		video.setVideoWidth(videoWidth);
-//		video.setVideoDesc(desc);
-//		video.setVideoPath(uploadPathDB);
-//		video.setCoverPath(coverPathDB);
-//		video.setStatus(VideoStatusEnum.SUCCESS.value);
-//		video.setCreateTime(new Date());
-//		
-//		String videoId = videoService.saveVideo(video);
+		if (StringUtils.isNotBlank(bgmId)) {
+			Bgm bgm = bgmService.queryBgmById(bgmId);
+			String mp3InputPath = FILE_SPACE + bgm.getPath();
+			
+			MergeVideoMp3 tool = new MergeVideoMp3(FFMPEG_EXE);
+			String videoInputPath = finalVideoPath;
+			
+			String videoOutputName = UUID.randomUUID().toString() + ".mp4";
+			uploadPathDB = "/" + userId + "/video" + "/" + videoOutputName;
+			finalVideoPath = FILE_SPACE + uploadPathDB;
+			tool.convertor(videoInputPath, mp3InputPath, videoSeconds, finalVideoPath);
+		}
+		System.out.println("uploadPathDB=" + uploadPathDB);
+		System.out.println("finalVideoPath=" + finalVideoPath);
 		
-		return IMoocJSONResult.ok();
+		// 对视频进行截图
+		FetchVideoCover videoInfo = new FetchVideoCover(FFMPEG_EXE);
+		videoInfo.getCover(finalVideoPath, FILE_SPACE + coverPathDB);
+		
+		// 保存视频信息到数据库
+		Videos video = new Videos();
+		video.setAudioId(bgmId);
+		video.setUserId(userId);
+		video.setVideoSeconds((float)videoSeconds);
+		video.setVideoHeight(videoHeight);
+		video.setVideoWidth(videoWidth);
+		video.setVideoDesc(desc);
+		video.setVideoPath(uploadPathDB);
+		video.setCoverPath(coverPathDB);
+		video.setStatus(VideoStatusEnum.SUCCESS.value);
+		video.setCreateTime(new Date());
+		
+		String videoId = videoService.saveVideo(video);
+		
+		return IMoocJSONResult.ok(videoId);
 	}
 	
 	@ApiOperation(value="上传封面", notes="上传封面的接口")

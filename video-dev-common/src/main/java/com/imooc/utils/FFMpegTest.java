@@ -10,11 +10,18 @@ public class FFMpegTest {
 
 	private String ffmpegEXE;
 	
+	//生成构造函数
 	public FFMpegTest(String ffmpegEXE) {
 		super();
 		this.ffmpegEXE = ffmpegEXE;
 	}
 	
+	/**
+	 * 转换
+	 * @param videoInputPath
+	 * @param videoOutputPath
+	 * @throws Exception
+	 */
 	public void convertor(String videoInputPath, String videoOutputPath) throws Exception {
 //		ffmpeg -i input.mp4 -y output.avi
 		List<String> command = new ArrayList<>();
@@ -53,9 +60,9 @@ public class FFMpegTest {
 	}
 
 	public static void main(String[] args) {
-		FFMpegTest ffmpeg = new FFMpegTest("C:\\ffmpeg\\bin\\ffmpeg.exe");
+		FFMpegTest ffmpeg = new FFMpegTest("D:\\2_env\\ffmpeg\\bin\\ffmpeg.exe");
 		try {
-			ffmpeg.convertor("C:\\苏州大裤衩.mp4", "C:\\北京北京.avi");
+			ffmpeg.convertor("D:\\cc.mp4", "D:\\灯光秀.avi");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
