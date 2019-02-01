@@ -101,10 +101,10 @@ public class VideoServiceImpl implements VideoService {
 		PageInfo<VideosVO> pageList = new PageInfo<>(list);
 		
 		PagedResult pagedResult = new PagedResult();
-		pagedResult.setPage(page);
-		pagedResult.setTotal(pageList.getPages());
-		pagedResult.setRows(list);
-		pagedResult.setRecords(pageList.getTotal());
+		pagedResult.setPage(page);//当前第几页
+		pagedResult.setTotal(pageList.getPages());//总页数
+		pagedResult.setRows(list);//查询出来分页的数据数
+		pagedResult.setRecords(pageList.getTotal());//总记录数
 		
 		return pagedResult;
 	}
